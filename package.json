@@ -1,0 +1,15 @@
+{
+  "name": "border-ai-discord-bot",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Border AI Discord interactions bot for Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "register": "node scripts/register-commands.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.136.3"
+  }
+}
