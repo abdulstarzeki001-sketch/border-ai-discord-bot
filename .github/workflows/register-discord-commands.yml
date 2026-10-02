@@ -2,6 +2,11 @@ name: Register Discord Commands
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/register-discord-commands.yml"
 
 permissions:
   contents: read
@@ -12,6 +17,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Validate required secrets
+        run: |
+          test -n "$DISCORD_BOT_TOKEN" || (echo "Missing DISCORD_BOT_TOKEN" && exit 1)
+          test -n "$DISCORD_APPLICATION_ID" || (echo "Missing DISCORD_APPLICATION_ID" && exit 1)
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_APPLICATION_ID: ${{ secrets.DISCORD_APPLICATION_ID }}
 
       - name: Register slash commands
         run: node scripts/register-commands.mjs
